@@ -3,6 +3,7 @@
 namespace app\models\cbt;
 
 use app\models\Cbt;
+use app\models\cbt\query\TripQuery;
 use Yii;
 
 /**
@@ -76,5 +77,14 @@ class Trip extends Cbt
     public function getTripServices()
     {
         return $this->hasMany(TripService::class, ['trip_id' => 'id']);
+    }
+
+    /**
+     * @inheritdoc
+     * @return TripQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new TripQuery(get_called_class());
     }
 }

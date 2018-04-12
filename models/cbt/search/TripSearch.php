@@ -2,6 +2,7 @@
 
 namespace app\models\cbt\search;
 
+use app\models\cbt\query\TripQuery;
 use app\models\cbt\Trip;
 use yii\data\ActiveDataProvider;
 
@@ -10,8 +11,6 @@ use yii\data\ActiveDataProvider;
  */
 class TripSearch extends Trip
 {
-    const TRIP_CORPORATE_ID = 3;
-    const TRIP_SERVICE_SERVICE_ID = 2;
     /**
      * QUERY
      *
@@ -38,7 +37,7 @@ class TripSearch extends Trip
      */
     public function search($params)
     {
-        $query = Trip::find()->with();
+        $query = Trip::find()->actual();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -47,7 +46,6 @@ class TripSearch extends Trip
 
         $this->load($params);
 
-        $query->andFilterWhere(['corporate_id' => self::TRIP_CORPORATE_ID]);
 
         return $dataProvider;
     }
