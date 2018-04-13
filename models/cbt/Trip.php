@@ -4,7 +4,6 @@ namespace app\models\cbt;
 
 use app\models\Cbt;
 use app\models\cbt\query\TripQuery;
-use Yii;
 
 /**
  * This is the model class for table "trip".
@@ -33,6 +32,15 @@ class Trip extends Cbt
     public static function tableName()
     {
         return 'trip';
+    }
+
+    /**
+     * @inheritdoc
+     * @return TripQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new TripQuery(get_called_class());
     }
 
     /**
@@ -80,11 +88,11 @@ class Trip extends Cbt
     }
 
     /**
-     * @inheritdoc
-     * @return TripQuery the active query used by this AR class.
+     * @return \yii\db\ActiveQuery
      */
-    public static function find()
+    public function getFlightSegment()
     {
-        return new TripQuery(get_called_class());
+        return $this->hasMany(FlightSegment::class, ['flight_id' => 'id'])
+            ->via('tripServices');
     }
 }

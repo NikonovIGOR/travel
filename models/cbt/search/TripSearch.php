@@ -36,7 +36,7 @@ class TripSearch extends Trip
      */
     public function search($params)
     {
-        $query = Trip::find()->actual();
+        $query = Trip::find()->actual()->airport('Домодедово, Москва');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

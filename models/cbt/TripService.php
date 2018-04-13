@@ -86,4 +86,12 @@ class TripService extends Cbt
     {
         return $this->hasOne(Trip::class, ['id' => 'trip_id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFlightSegment()
+    {
+        return $this->hasMany(FlightSegment::class, ['flight_id' => 'id']);
+    }
 }

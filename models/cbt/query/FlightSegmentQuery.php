@@ -2,6 +2,8 @@
 
 namespace app\models\cbt\query;
 
+use app\models\nemo_guide_etalon\AirportName;
+
 /**
  * This is the ActiveQuery class for [[FlightSegment]].
  *
@@ -9,13 +11,13 @@ namespace app\models\cbt\query;
  */
 class FlightSegmentQuery extends \yii\db\ActiveQuery
 {
-
     public function searchByName($airportName)
     {
         return $this->joinWith([
             'airportName' => function ($query) use ($airportName) {
-                $query->andFilterWhere(['like', 'value', $airportName]);
+                $query->from('nemo_guide_etalon.' . AirportName::tableName())
+                    ->andFilterWhere(['like', 'value', $airportName]);
             },
-        ], false);
+        ]);
     }
 }
