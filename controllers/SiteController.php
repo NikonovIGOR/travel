@@ -23,6 +23,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $searchModel = new TripSearch();
+        $searchModel->airport = 'Домодедово, Москва';
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

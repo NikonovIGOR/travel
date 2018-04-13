@@ -10,12 +10,7 @@ use yii\data\ActiveDataProvider;
  */
 class TripSearch extends Trip
 {
-    /**
-     * QUERY
-     *
-     * @var
-     */
-    public $q;
+    public $airport;
 
     /**
      * @inheritdoc
@@ -23,7 +18,7 @@ class TripSearch extends Trip
     public function rules()
     {
         return [
-            [['q'], 'safe'],
+            [['airport'], 'safe'],
         ];
     }
 
@@ -36,7 +31,7 @@ class TripSearch extends Trip
      */
     public function search($params)
     {
-        $query = Trip::find()->actual()->airport('Домодедово, Москва');
+        $query = Trip::find()->actual();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -44,7 +39,7 @@ class TripSearch extends Trip
         ]);
 
         $this->load($params);
-
+        $query->airport($this->airport);
 
         return $dataProvider;
     }
