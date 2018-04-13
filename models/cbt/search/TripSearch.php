@@ -2,7 +2,6 @@
 
 namespace app\models\cbt\search;
 
-use app\models\cbt\query\TripQuery;
 use app\models\cbt\Trip;
 use yii\data\ActiveDataProvider;
 

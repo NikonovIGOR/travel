@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\cbt\FlightSegment;
 use app\models\cbt\search\TripSearch;
 use Yii;
 use yii\web\Controller;
@@ -24,6 +25,7 @@ class SiteController extends Controller
     {
         $searchModel = new TripSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $fly = FlightSegment::find()->searchByName('Домодедово, Москва')->all();
 
         return $this->render('index', [
             'searchModel' => $searchModel,

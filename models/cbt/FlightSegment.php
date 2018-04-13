@@ -3,37 +3,38 @@
 namespace app\models\cbt;
 
 use app\models\Cbt;
-use Yii;
+use app\models\cbt\query\FlightSegmentQuery;
+use app\models\nemo_guide_etalon\AirportName;
 
 /**
  * This is the model class for table "flight_segment".
  *
- * @property int $id
- * @property int $flight_id
- * @property int $num
- * @property int $group
+ * @property int    $id
+ * @property int    $flight_id
+ * @property int    $num
+ * @property int    $group
  * @property string $departureTerminal
  * @property string $arrivalTerminal
  * @property string $flightNumber
  * @property string $departureDate
  * @property string $arrivalDate
- * @property int $stopNumber
- * @property int $flightTime
- * @property int $eTicket
+ * @property int    $stopNumber
+ * @property int    $flightTime
+ * @property int    $eTicket
  * @property string $bookingClass
  * @property string $bookingCode
- * @property int $baggageValue
+ * @property int    $baggageValue
  * @property string $baggageUnit
- * @property int $depAirportId
- * @property int $arrAirportId
- * @property int $opCompanyId
- * @property int $markCompanyId
- * @property int $aircraftId
- * @property int $depCityId
- * @property int $arrCityId
+ * @property int    $depAirportId
+ * @property int    $arrAirportId
+ * @property int    $opCompanyId
+ * @property int    $markCompanyId
+ * @property int    $aircraftId
+ * @property int    $depCityId
+ * @property int    $arrCityId
  * @property string $supplierRef
- * @property int $depTimestamp
- * @property int $arrTimestamp
+ * @property int    $depTimestamp
+ * @property int    $arrTimestamp
  */
 class FlightSegment extends Cbt
 {
@@ -45,6 +46,14 @@ class FlightSegment extends Cbt
         return 'flight_segment';
     }
 
+    /**
+     * @inheritdoc
+     * @return FlightSegmentQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new FlightSegmentQuery(get_called_class());
+    }
 
     /**
      * @inheritdoc
@@ -53,7 +62,26 @@ class FlightSegment extends Cbt
     {
         return [
             [['flight_id', 'num', 'group'], 'required'],
-            [['flight_id', 'num', 'group', 'stopNumber', 'flightTime', 'baggageValue', 'depAirportId', 'arrAirportId', 'opCompanyId', 'markCompanyId', 'aircraftId', 'depCityId', 'arrCityId', 'depTimestamp', 'arrTimestamp'], 'integer'],
+            [
+                [
+                    'flight_id',
+                    'num',
+                    'group',
+                    'stopNumber',
+                    'flightTime',
+                    'baggageValue',
+                    'depAirportId',
+                    'arrAirportId',
+                    'opCompanyId',
+                    'markCompanyId',
+                    'aircraftId',
+                    'depCityId',
+                    'arrCityId',
+                    'depTimestamp',
+                    'arrTimestamp',
+                ],
+                'integer',
+            ],
             [['departureTerminal', 'arrivalTerminal', 'eTicket', 'bookingCode'], 'string', 'max' => 1],
             [['flightNumber'], 'string', 'max' => 6],
             [['departureDate', 'arrivalDate'], 'string', 'max' => 20],
@@ -95,5 +123,13 @@ class FlightSegment extends Cbt
             'depTimestamp' => 'Dep Timestamp',
             'arrTimestamp' => 'Arr Timestamp',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAirportName()
+    {
+        return $this->hasMany(AirportName::class, ['airport_id' => 'depAirportId']);
     }
 }

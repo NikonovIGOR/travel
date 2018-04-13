@@ -2,6 +2,7 @@
 
 namespace app\models\nemo_guide_etalon;
 
+use app\models\NemoGuideEtalon;
 use Yii;
 
 /**
@@ -12,7 +13,7 @@ use Yii;
  * @property int $language_id
  * @property string $value
  */
-class AirportName extends \yii\db\ActiveRecord
+class AirportName extends NemoGuideEtalon
 {
     /**
      * @inheritdoc
@@ -20,14 +21,6 @@ class AirportName extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'airport_name';
-    }
-
-    /**
-     * @return \yii\db\Connection the database connection used by this AR class.
-     */
-    public static function getDb()
-    {
-        return Yii::$app->get('db_nemo_guide_etalon');
     }
 
     /**

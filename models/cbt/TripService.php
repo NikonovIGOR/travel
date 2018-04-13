@@ -2,32 +2,32 @@
 
 namespace app\models\cbt;
 
-use Yii;
+use app\models\Cbt;
 
 /**
  * This is the model class for table "trip_service".
  *
- * @property int $id
- * @property int $trip_id
- * @property int $service_id
- * @property int $status
- * @property int $type_booking Тип заказа
- * @property int $variants Варианты
+ * @property int    $id
+ * @property int    $trip_id
+ * @property int    $service_id
+ * @property int    $status
+ * @property int    $type_booking Тип заказа
+ * @property int    $variants     Варианты
  * @property string $price
  * @property string $currency
  * @property string $confirmation_number
- * @property int $deadline
- * @property int $date_start
- * @property int $date_end
- * @property int $start_city_id
- * @property int $start_point_id
- * @property int $end_point_id
- * @property int $end_city_id
+ * @property int    $deadline
+ * @property int    $date_start
+ * @property int    $date_end
+ * @property int    $start_city_id
+ * @property int    $start_point_id
+ * @property int    $end_point_id
+ * @property int    $end_city_id
  * @property string $description
  *
- * @property Trip $trip
+ * @property Trip   $trip
  */
-class TripService extends \yii\db\ActiveRecord
+class TripService extends Cbt
 {
     /**
      * @inheritdoc
@@ -35,14 +35,6 @@ class TripService extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'trip_service';
-    }
-
-    /**
-     * @return \yii\db\Connection the database connection used by this AR class.
-     */
-    public static function getDb()
-    {
-        return Yii::$app->get('db_cbt');
     }
 
     /**
@@ -57,7 +49,7 @@ class TripService extends \yii\db\ActiveRecord
             [['description'], 'string'],
             [['currency'], 'string', 'max' => 3],
             [['confirmation_number'], 'string', 'max' => 16],
-            [['trip_id'], 'exist', 'skipOnError' => true, 'targetClass' => Trip::className(), 'targetAttribute' => ['trip_id' => 'id']],
+            [['trip_id'], 'exist', 'skipOnError' => true, 'targetClass' => Trip::class, 'targetAttribute' => ['trip_id' => 'id']],
         ];
     }
 
@@ -92,6 +84,6 @@ class TripService extends \yii\db\ActiveRecord
      */
     public function getTrip()
     {
-        return $this->hasOne(Trip::className(), ['id' => 'trip_id']);
+        return $this->hasOne(Trip::class, ['id' => 'trip_id']);
     }
 }
